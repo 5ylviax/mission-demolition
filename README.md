@@ -1,0 +1,1 @@
+This game is a simple version of a style of physics-based game. The player can launch a projectile from the slingshot on the left at the castle on the right, with the goal of the projectile touching the green goal box.
