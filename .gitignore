@@ -73,6 +73,7 @@ crashlytics-build.properties
 .DS_Store
 *.keystore
 
-# Remove Unity version control .plastics files
+# Ignore Unity Plastic SCM version control folder
+.plastic/
 /.plastic/
 /*.plastic
