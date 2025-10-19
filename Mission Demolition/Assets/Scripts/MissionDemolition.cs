@@ -43,6 +43,14 @@ public class MissionDemolition : MonoBehaviour
         {
             Destroy(castle);
         }
+
+        foreach (Rigidbody rb in FindObjectsOfType<Rigidbody>())
+        {
+        // Skip the slingshot or camera if they exist
+        if (rb.gameObject.name.Contains("Slingshot") || rb.gameObject.name.Contains("FollowCam"))
+            continue;
+        Destroy(rb.gameObject);
+        }
         // Destroy old projectiles if they exist 
         Projectile.DESTROY_PROJECTILES();
 
@@ -56,6 +64,9 @@ public class MissionDemolition : MonoBehaviour
         UpdateGUI();
 
         mode = GameMode.playing;
+
+        // Zoom out to show both 
+        FollowCam.SWITCH_VIEW(FollowCam.eView.both); //  a 
     }
 
     void UpdateGUI()
@@ -74,6 +85,9 @@ public class MissionDemolition : MonoBehaviour
         {
             // Change mode to stop checking for level end 
             mode = GameMode.levelEnd;
+
+            // Zoom out to show both 
+            FollowCam.SWITCH_VIEW(FollowCam.eView.both); //b 
 
             // Start the next level in 2 sec
             Invoke("NextLevel", 2f);

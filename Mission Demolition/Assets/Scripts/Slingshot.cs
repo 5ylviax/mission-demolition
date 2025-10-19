@@ -81,6 +81,10 @@ public class Slingshot : MonoBehaviour
             projRB.isKinematic = false; // allows the Projectile to now fly through the air based on physics simulation 
             projRB.collisionDetectionMode = CollisionDetectionMode.Continuous; // page 698
             projRB.velocity = -mouseDelta * velocityMult;
+
+            // Switch to slingshot view immediately before setting POI 
+            FollowCam.SWITCH_VIEW(FollowCam.eView.slingshot);                       // a
+
             FollowCam.POI = projectile; // Set the _MainCamera POI
             // Add a ProjectileLine to the Projectile
             Instantiate<GameObject>(projLinePrefab, projectile.transform);
