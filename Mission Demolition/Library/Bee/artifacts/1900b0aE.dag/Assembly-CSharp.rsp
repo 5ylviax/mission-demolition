@@ -343,17 +343,17 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
-"Assets/MainMenu.cs"
 "Assets/Scripts/CloudCover.cs"
 "Assets/Scripts/FollowCam.cs"
 "Assets/Scripts/Goal.cs"
+"Assets/Scripts/MainMenu.cs"
 "Assets/Scripts/MissionDemolition.cs"
 "Assets/Scripts/Projectile.cs"
 "Assets/Scripts/ProjectileLine.cs"
 "Assets/Scripts/Quit.cs"
 "Assets/Scripts/RigidbodySleep.cs"
 "Assets/Scripts/Slingshot.cs"
-"Assets/SoundEffectPlayer.cs"
+"Assets/Scripts/SoundEffectPlayer.cs"
 -langversion:9.0
 
 /deterministic
