@@ -12,8 +12,6 @@ This game is a simple version of a style of physics-based game. The player can l
 - This screen includes two options:
     - Retry 
     - Quit
-- Shows the player the best score
-
 ### Four Levels
 - Created 4 unique castle, each increasing in difficulty
 - The castles are arranged from easy --> hard, providing a smooth difficulty curve
