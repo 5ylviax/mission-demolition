@@ -28,11 +28,21 @@ public class Projectile : MonoBehaviour
     private List<float> deltas = new List<float>();
     private Rigidbody rigid;
 
+    // 🎧 Impact audio
+    public AudioClip hitSound;          // assign in Inspector
+    private AudioSource audioSource;    // set in Start()
 
     // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
+
+        // Audio setup
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 0f; // 2D sound
+
         awake = true;
         prevPos = new Vector3(1000, 1000, 0);
         deltas.Add(1000);
@@ -75,6 +85,18 @@ public class Projectile : MonoBehaviour
             rigid.Sleep();
         }
     }
+    
+    // 🎯 Play impact sound when colliding
+    // 🎯 Play impact sound every time the projectile hits anything
+    void OnCollisionEnter(Collision collision)
+    {
+        if (hitSound == null || audioSource == null) return;
+
+        // Louder for harder impacts
+        float impactVolume = Mathf.Clamp01(collision.relativeVelocity.magnitude / 10f);
+        audioSource.PlayOneShot(hitSound, impactVolume);
+    }
+
 
     private void OnDestroy()
     {

@@ -44,6 +44,8 @@ public class MissionDemolition : MonoBehaviour
             Destroy(castle);
         }
 
+        // Delete rigid
+
         foreach (Rigidbody rb in FindObjectsOfType<Rigidbody>())
         {
         // Skip the slingshot or camera if they exist

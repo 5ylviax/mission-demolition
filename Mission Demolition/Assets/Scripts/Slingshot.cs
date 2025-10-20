@@ -16,13 +16,29 @@ public class Slingshot : MonoBehaviour
     public Vector3 launchPos;
     public GameObject projectile;
     public bool aimingMode;
+    public LineRenderer rubber;
+    public Transform anchorPoint;
 
+    [Header("Audio")]
+    public AudioSource audioSource;   // The AudioSource component on the Slingshot
+    public AudioClip snapSound;       // The rubber snap sound effect
+
+    
     void Awake()
     {
         Transform launchPointTrans = transform.Find("LaunchPoint");
         launchPoint = launchPointTrans.gameObject;
         launchPoint.SetActive(false);
         launchPos = launchPointTrans.position;
+
+        // Rubber band setup
+        if(rubber != null)
+        {
+            rubber.positionCount = 2;
+            rubber.startWidth = 0.04f;
+            rubber.endWidth = 0.02f;
+            rubber.enabled = false;
+        }
     }
     void OnMouseEnter()
     {
@@ -73,6 +89,22 @@ public class Slingshot : MonoBehaviour
         Vector3 projPos = launchPos + mouseDelta;
         projectile.transform.position = projPos;
 
+        // Update the rubber band to follow the projectile 
+        if(rubber != null)
+        {
+            rubber.enabled = true;
+
+            //Start point = slingshot ancher, endpoint = projectile
+            Vector3 anchorPos = (anchorPoint != null) ? anchorPoint.position : launchPos;
+            rubber.SetPosition(0, anchorPos);
+            rubber.SetPosition(1, projectile.transform.position);
+
+            // Optional: dynamic thickness based on stretch distance
+            float dist = Vector3.Distance(anchorPos, projectile.transform.position);
+            rubber.startWidth = Mathf.Lerp(0.03f, 0.06f, dist / 3f);
+            rubber.endWidth = Mathf.Lerp(0.02f, 0.04f, dist / 3f);
+        }
+
         if(Input.GetMouseButtonUp(0)) // This will only return true on the Update that the player released the mouse button
         {
             // The mouse has been released 
@@ -80,6 +112,13 @@ public class Slingshot : MonoBehaviour
             Rigidbody projRB = projectile.GetComponent<Rigidbody>();
             projRB.isKinematic = false; // allows the Projectile to now fly through the air based on physics simulation 
             projRB.collisionDetectionMode = CollisionDetectionMode.Continuous; // page 698
+
+            // 🔊 Play rubber band snap sound here
+            if (audioSource != null && snapSound != null)
+            {
+                audioSource.pitch = Random.Range(0.95f, 1.05f); // Optional: adds realism
+                audioSource.PlayOneShot(snapSound);
+            }
             projRB.velocity = -mouseDelta * velocityMult;
 
             // Switch to slingshot view immediately before setting POI 
@@ -89,6 +128,11 @@ public class Slingshot : MonoBehaviour
             // Add a ProjectileLine to the Projectile
             Instantiate<GameObject>(projLinePrefab, projectile.transform);
             projectile = null;
+
+            if(rubber != null)
+            {
+                rubber.enabled = false;
+            }
             MissionDemolition.SHOT_FIRED();
         }
     }
