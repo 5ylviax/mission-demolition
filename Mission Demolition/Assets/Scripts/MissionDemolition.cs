@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum GameMode
 {
@@ -90,9 +91,24 @@ public class MissionDemolition : MonoBehaviour
 
             // Zoom out to show both 
             FollowCam.SWITCH_VIEW(FollowCam.eView.both); //b 
+        if (level >= levelMax - 1)
+            {
+                // (optional) save any stats you want to show
+                PlayerPrefs.SetInt("LastShots", shotsTaken);
+                int bestScore = PlayerPrefs.GetInt("BestScore", int.MaxValue);
+                if (shotsTaken < bestScore)
+                {
+                    PlayerPrefs.SetInt("BestScore", shotsTaken);
+                }
+                PlayerPrefs.Save();
 
-            // Start the next level in 2 sec
-            Invoke("NextLevel", 2f);
+                SceneManager.LoadScene("GameOver");   // <-- make sure this scene is in Build Settings
+            }
+            else
+            {
+                // not the last level: proceed as before
+                Invoke("NextLevel", 2f);
+            }
         }
     }
 

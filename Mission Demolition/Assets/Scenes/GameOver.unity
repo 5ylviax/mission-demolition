@@ -937,7 +937,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Game Over
+  m_Text: "Good Job\nYou Have Completed All Levels\n\U0001F382\U0001F388\U0001F389\U0001F973\U0001F382\U0001F388\U0001F389\U0001F973"
 --- !u!222 &1388733612
 CanvasRenderer:
   m_ObjectHideFlags: 0

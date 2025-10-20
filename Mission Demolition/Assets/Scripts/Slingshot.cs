@@ -113,7 +113,7 @@ public class Slingshot : MonoBehaviour
             projRB.isKinematic = false; // allows the Projectile to now fly through the air based on physics simulation 
             projRB.collisionDetectionMode = CollisionDetectionMode.Continuous; // page 698
 
-            // 🔊 Play rubber band snap sound here
+            // Play rubber band snap sound here
             if (audioSource != null && snapSound != null)
             {
                 audioSource.pitch = Random.Range(0.95f, 1.05f); // Optional: adds realism
